@@ -15,7 +15,7 @@ export default function Home() {
         <h1 className={styles.title}>Fast Feedback</h1>
 
         <p className={styles.description}>
-          Get started by editing{' '}
+          exited to editing
           <code className={styles.code}>pages/index.js</code>
         </p>
 
