@@ -23,3 +23,13 @@ export async function createUser(uid: string, data: UserState) {
     console.error(`Error: adding document `, error)
   }
 }
+
+export async function createSite(data: UserState) {
+  try {
+    await addDoc(collection(db, 'sites'), {
+      ...data
+    })
+  } catch (error) {
+    console.error(`Error: adding document `, error)
+  }
+}
