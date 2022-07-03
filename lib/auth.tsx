@@ -1,4 +1,4 @@
-import type { ChildrenProps } from './types'
+import type { ChildrenProps, UserState } from './types'
 import './firebase'
 import {
   createContext,
@@ -17,14 +17,6 @@ import {
   User
 } from 'firebase/auth'
 import { createUser } from './db'
-
-export type UserState = {
-  uid: string
-  email: string | null
-  name: string | null
-  provider: string
-  photoUrl: string | null
-}
 
 const githubAuthProvider = new GithubAuthProvider()
 const auth = getAuth()

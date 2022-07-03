@@ -4,9 +4,10 @@ import {
   collection,
   addDoc,
   setDoc,
-  doc
+  doc,
+  getDoc
 } from 'firebase/firestore'
-import { UserState } from './auth'
+import { SiteData, UserState } from './types'
 
 const db = getFirestore(app)
 
@@ -24,7 +25,7 @@ export async function createUser(uid: string, data: UserState) {
   }
 }
 
-export async function createSite(data: UserState) {
+export async function createSite(data: SiteData) {
   try {
     await addDoc(collection(db, 'sites'), {
       ...data
