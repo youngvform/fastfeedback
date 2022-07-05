@@ -13,6 +13,12 @@ export interface UserState {
 }
 
 export interface SiteData {
-  site: string
+  name: string
   url: string
+  authorId: string
+  createdAt: string
+}
+
+export interface SavedSiteData extends SiteData {
+  id: string
 }

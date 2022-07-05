@@ -4,8 +4,8 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 export default async function handler(
   _req: NextApiRequest,
-  res: NextApiResponse<DocumentData[]>
+  res: NextApiResponse<{ sites: DocumentData[] }>
 ) {
   const sites = await getSites()
-  return res.status(200).json(sites)
+  return res.status(200).json({ sites })
 }

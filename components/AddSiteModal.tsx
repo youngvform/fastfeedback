@@ -17,18 +17,21 @@ import {
 import { useForm } from 'react-hook-form'
 import { createSite } from '@/lib/db'
 import { useAuth } from '@/lib/auth'
+import { formatISO } from 'date-fns'
 
 function AddSiteModal() {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { handleSubmit, register } = useForm()
+  const { handleSubmit, register, reset } = useForm()
   const auth = useAuth()
   const toast = useToast()
-  const onCreateSite = ({ site, url }) => {
-    // console.log({
-    //   authorId: auth.user?.uid,
-    //   cratedAt: new Date().toLocaleString()
-    // })
-    createSite({ site, url })
+
+  const onCreateSite = ({ name, url }) => {
+    createSite({
+      name,
+      url,
+      authorId: auth.user!.uid,
+      createdAt: formatISO(new Date())
+    })
 
     toast({
       title: `Success!`,
@@ -38,6 +41,7 @@ function AddSiteModal() {
       isClosable: true
     })
     onClose()
+    reset()
   }
 
   return (
@@ -55,7 +59,7 @@ function AddSiteModal() {
               <FormLabel>Name</FormLabel>
               <Input
                 placeholder="My Site"
-                {...register('site', {
+                {...register('name', {
                   required: 'Required'
                 })}
               />
@@ -76,7 +80,7 @@ function AddSiteModal() {
             <Button onClick={onClose} mr={3}>
               Cancel
             </Button>
-            <Button backgroundColor="#99FFFE" type="submit">
+            <Button backgroundColor="#4470ff" textColor="white" type="submit">
               Create
             </Button>
           </ModalFooter>
