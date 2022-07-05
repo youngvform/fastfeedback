@@ -2,10 +2,10 @@ import React from 'react'
 import NextLink from 'next/link'
 
 import { useAuth } from '@/lib/auth'
-import { Avatar, Box, Flex, Icon, Link } from '@chakra-ui/react'
+import { Avatar, Box, Button, Flex, Icon, Link } from '@chakra-ui/react'
 
 const DashboardShell = ({ children }) => {
-  const { user } = useAuth()
+  const { user, signOutWithGithub } = useAuth()
 
   return (
     <Box backgroundColor="gray.100" h="100vh">
@@ -52,6 +52,15 @@ const DashboardShell = ({ children }) => {
             </NextLink>
           </Flex>
           <Flex justifyContent="center" alignItems="center">
+            {user && (
+              <Button
+                variant="ghost"
+                mr={2}
+                onClick={() => signOutWithGithub()}
+              >
+                Log Out
+              </Button>
+            )}
             <NextLink href="/account" passHref>
               <Link>
                 <Avatar size="sm" src={user?.photoUrl ?? ''} />
