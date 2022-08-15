@@ -22,3 +22,7 @@ export interface SiteData {
 export interface SavedSiteData extends SiteData {
   id: string
 }
+
+export interface GetSitesResponse {
+  sites: SavedSiteData[]
+}

@@ -1,10 +1,10 @@
 import { getSites } from '@/lib/db-admin'
-import { DocumentData } from 'firebase/firestore'
+import { GetSitesResponse } from '@/lib/types'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 export default async function handler(
   _req: NextApiRequest,
-  res: NextApiResponse<{ sites: DocumentData[] }>
+  res: NextApiResponse<GetSitesResponse>
 ) {
   const sites = await getSites()
   return res.status(200).json({ sites })

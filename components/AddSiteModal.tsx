@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC, PropsWithChildren } from 'react'
 import {
   useDisclosure,
   Button,
@@ -18,20 +18,25 @@ import { useForm } from 'react-hook-form'
 import { createSite } from '@/lib/db'
 import { useAuth } from '@/lib/auth'
 import { formatISO } from 'date-fns'
+import { mutate } from 'swr'
+import { API_SITES } from '@/lib/apis'
+import fetcher from '@/utils/fetcher'
+import { GetSitesResponse } from '@/lib/types'
 
-function AddSiteModal() {
+const AddSiteModal: FC<PropsWithChildren> = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { handleSubmit, register, reset } = useForm()
   const auth = useAuth()
   const toast = useToast()
 
   const onCreateSite = ({ name, url }) => {
-    createSite({
+    const newSite = {
       name,
       url,
       authorId: auth.user!.uid,
       createdAt: formatISO(new Date())
-    })
+    }
+    createSite(newSite)
 
     toast({
       title: `Success!`,
@@ -40,14 +45,26 @@ function AddSiteModal() {
       duration: 5000,
       isClosable: true
     })
+    mutate(API_SITES, (data) => ({ sites: [...data?.sites!, newSite] }), false)
     onClose()
     reset()
   }
 
   return (
     <>
-      <Button fontWeight="bold" maxW="200px" onClick={onOpen}>
-        Add Your First Site!
+      <Button
+        id="add-site-modal-button"
+        onClick={onOpen}
+        backgroundColor="gray.900"
+        color="white"
+        fontWeight="medium"
+        _hover={{ bg: 'gray.700' }}
+        _active={{
+          bg: 'gray.800',
+          transform: 'scale(0.95)'
+        }}
+      >
+        {children}
       </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

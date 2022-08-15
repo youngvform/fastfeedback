@@ -33,7 +33,7 @@ const SiteTable = ({ sites }: { sites: SavedSiteData[] }) => {
       <tbody>
         {sites.map((site) => (
           <TableRow
-            key={site.id}
+            key={site.id ?? site.url}
             name={site.name}
             authorId={site.authorId}
             createdAt={site.createdAt}

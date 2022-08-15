@@ -6,13 +6,13 @@ import SiteTableSkeleton from '@/components/SiteTableSkeleton'
 import DashboardShell from '@/components/DashboardShell'
 import useSWR from 'swr'
 import fetcher from '@/utils/fetcher'
-import { SavedSiteData } from '@/lib/types'
+import { GetSitesResponse } from '@/lib/types'
 import SiteTable from '@/components/SiteTable'
+import { API_SITES } from '@/lib/apis'
 
 export default function Dashboard() {
   const auth = useAuth()
-  const { data } = useSWR<{ sites: SavedSiteData[] }>('/api/sites', fetcher)
-  console.log(`yoyoyoyoyo dashboard: data `, data)
+  const { data } = useSWR<GetSitesResponse>(API_SITES, fetcher)
   if (!data) {
     return (
       <DashboardShell>
