@@ -8,13 +8,14 @@ import {
   getDoc
 } from 'firebase/firestore'
 import { SiteData, UserState } from './types'
+import { DBCollectionName } from './enums'
 
 const db = getFirestore(app)
 
 export async function createUser(uid: string, data: UserState) {
   try {
     await setDoc(
-      doc(db, 'users', uid),
+      doc(db, DBCollectionName.USERS, uid),
       {
         ...data
       },
@@ -27,7 +28,7 @@ export async function createUser(uid: string, data: UserState) {
 
 export async function createSite(data: SiteData) {
   try {
-    await addDoc(collection(db, 'sites'), {
+    await addDoc(collection(db, DBCollectionName.SITES), {
       ...data
     })
   } catch (error) {

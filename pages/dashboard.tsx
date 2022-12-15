@@ -8,11 +8,11 @@ import useSWR from 'swr'
 import fetcher from '@/utils/fetcher'
 import { GetSitesResponse } from '@/lib/types'
 import SiteTable from '@/components/SiteTable'
-import { API_SITES } from '@/lib/apis'
+import { API } from '@/lib/enums'
 
 export default function Dashboard() {
   const auth = useAuth()
-  const { data } = useSWR<GetSitesResponse>(API_SITES, fetcher)
+  const { data } = useSWR<GetSitesResponse>(API.SITES, fetcher)
   if (!data) {
     return (
       <DashboardShell>

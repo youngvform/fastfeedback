@@ -19,9 +19,7 @@ import { createSite } from '@/lib/db'
 import { useAuth } from '@/lib/auth'
 import { formatISO } from 'date-fns'
 import { mutate } from 'swr'
-import { API_SITES } from '@/lib/apis'
-import fetcher from '@/utils/fetcher'
-import { GetSitesResponse } from '@/lib/types'
+import { API } from '@/lib/enums'
 
 const AddSiteModal: FC<PropsWithChildren> = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -45,7 +43,7 @@ const AddSiteModal: FC<PropsWithChildren> = ({ children }) => {
       duration: 5000,
       isClosable: true
     })
-    mutate(API_SITES, (data) => ({ sites: [...data?.sites!, newSite] }), false)
+    mutate(API.SITES, (data) => ({ sites: [...data?.sites!, newSite] }), false)
     onClose()
     reset()
   }
