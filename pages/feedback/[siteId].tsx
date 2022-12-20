@@ -1,5 +1,7 @@
+import Feedback from '@/components/Feedback'
 import { getAllFeedback, getAllSites } from '@/lib/db-admin'
 import { SavedFeedback } from '@/lib/types'
+import { Box, Button, FormControl, FormLabel, Input } from '@chakra-ui/react'
 import { GetStaticProps, GetStaticPaths } from 'next'
 
 interface Props {
@@ -7,8 +9,28 @@ interface Props {
 }
 
 export default function SiteFeedback({ initialFeedback }: Props) {
-  console.log(`yoyoyoyoyo [siteId]: initialFeedback `, initialFeedback)
-  return initialFeedback.map((feedback) => JSON.stringify(feedback))
+  return (
+    <Box
+      display="flex"
+      flexDirection="column"
+      width="full"
+      maxWidth="700px"
+      margin="0 auto"
+    >
+      <Box as="form">
+        <FormControl my={8}>
+          <FormLabel htmlFor="comment">Comment</FormLabel>
+          <Input id="comment" placeholder="Leave a comment" />
+          <Button mt={4} type="submit" fontWeight="medium">
+            Add Comment
+          </Button>
+        </FormControl>
+      </Box>
+      {initialFeedback.map(({ id, author, text, createdAt }) => (
+        <Feedback key={id} author={author} text={text} createdAt={createdAt} />
+      ))}
+    </Box>
+  )
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
