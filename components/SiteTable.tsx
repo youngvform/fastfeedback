@@ -5,12 +5,12 @@ import { SavedSiteData } from '@/lib/types'
 import Link from 'next/link'
 import { format, parseISO } from 'date-fns'
 
-const TableRow = ({ name, url, createdAt }: Omit<SavedSiteData, 'id'>) => (
+const TableRow = ({ id, name, url, createdAt }: SavedSiteData) => (
   <Box as="tr">
     <Td fontWeight="medium">{name}</Td>
     <Td>{url}</Td>
     <Td>
-      <Link href={url}>
+      <Link href={`/feedback/${id}`}>
         <a>View Feedback</a>
       </Link>
     </Td>
@@ -19,6 +19,7 @@ const TableRow = ({ name, url, createdAt }: Omit<SavedSiteData, 'id'>) => (
 )
 
 const SiteTable = ({ sites }: { sites: SavedSiteData[] }) => {
+  console.log(`yoyoyoyoyo SiteTable: sites `, sites)
   return (
     <Table>
       <thead>
@@ -34,6 +35,7 @@ const SiteTable = ({ sites }: { sites: SavedSiteData[] }) => {
         {sites.map((site) => (
           <TableRow
             key={site.id ?? site.url}
+            id={site.id}
             name={site.name}
             authorId={site.authorId}
             createdAt={site.createdAt}

@@ -4,8 +4,11 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 export default async function handler(
   _req: NextApiRequest,
-  res: NextApiResponse<GetSitesResponse>
+  res: NextApiResponse<GetSitesResponse | any>
 ) {
-  const sites = await getAllSites()
+  const { sites, error } = await getAllSites()
+  if (error) {
+    return res.status(500).json({ error })
+  }
   return res.status(200).json({ sites })
 }

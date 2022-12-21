@@ -4,9 +4,14 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<GetFeedbackResponse>
+  res: NextApiResponse<GetFeedbackResponse | any>
 ) {
   const siteId = req.query.siteId
-  const feedback = await getAllFeedback(siteId as string)
-  return res.status(200).json({ feedback })
+  const { feedback, error } = await getAllFeedback(siteId as string)
+
+  if (error) {
+    res.status(500).json({ error })
+  } else {
+    res.status(200).json({ feedback })
+  }
 }
