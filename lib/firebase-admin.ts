@@ -11,4 +11,7 @@ if (admin.apps.length === 0) {
   })
 }
 
-export default admin.firestore()
+const auth = admin.auth()
+const db = admin.firestore()
+
+export { auth, db }

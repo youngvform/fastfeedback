@@ -38,10 +38,11 @@ export function useAuth() {
 function useProvideAuth() {
   const [user, setUser] = useState<UserState | null>(null)
 
-  const handleUser = (rawUser: User | null) => {
+  const handleUser = async (rawUser: User | null) => {
     if (rawUser) {
-      const user = formatUser(rawUser)
-      createUser(user.uid, user)
+      const user = await formatUser(rawUser)
+      const { accessToken, ...userWithoutToken } = user
+      createUser(user.uid, userWithoutToken)
       setUser(user)
       return user
     } else {
@@ -86,12 +87,14 @@ function useProvideAuth() {
   }
 }
 
-function formatUser(user: User): UserState {
+async function formatUser(user: User): Promise<UserState> {
+  const accessToken = await user.getIdToken()
   return {
     uid: user.uid,
     email: user.email,
     name: user.displayName,
     provider: user.providerData[0].providerId,
-    photoUrl: user.photoURL
+    photoUrl: user.photoURL,
+    accessToken
   }
 }

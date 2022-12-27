@@ -19,7 +19,6 @@ const TableRow = ({ id, name, url, createdAt }: SavedSiteData) => (
 )
 
 const SiteTable = ({ sites }: { sites: SavedSiteData[] }) => {
-  console.log(`yoyoyoyoyo SiteTable: sites `, sites)
   return (
     <Table>
       <thead>

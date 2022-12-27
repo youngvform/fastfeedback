@@ -11,8 +11,11 @@ import SiteTable from '@/components/SiteTable'
 import { API } from '@/lib/enums'
 
 export default function Dashboard() {
-  const auth = useAuth()
-  const { data } = useSWR<GetSitesResponse>(API.SITES, fetcher)
+  const { user } = useAuth()
+  const { data, error } = useSWR<GetSitesResponse>(
+    user ? [API.SITES, user.accessToken] : null,
+    fetcher
+  )
   if (!data) {
     return (
       <DashboardShell>

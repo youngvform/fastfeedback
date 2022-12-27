@@ -11,6 +11,7 @@ export interface UserState {
   name: string | null
   provider: string
   photoUrl: string | null
+  accessToken: string | null
 }
 
 export interface SiteData {

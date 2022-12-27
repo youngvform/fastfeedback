@@ -12,7 +12,10 @@ import { DBCollectionName } from './enums'
 
 const db = getFirestore(app)
 
-export async function createUser(uid: string, data: UserState) {
+export async function createUser(
+  uid: string,
+  data: Omit<UserState, 'accessToken'>
+) {
   try {
     await setDoc(
       doc(db, DBCollectionName.USERS, uid),

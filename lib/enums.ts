@@ -12,3 +12,8 @@ export enum API {
   SITES = '/api/sites',
   FEEDBACK = '/api/feedback'
 }
+
+export enum ErrorCode {
+  EXPIRED_TOKEN = 'auth/id-token-expired',
+  UNAUTHORIZED = 'Unauthorized'
+}
