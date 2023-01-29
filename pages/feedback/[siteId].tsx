@@ -72,7 +72,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const { sites, error } = await getAllSites()
   // 각 path의 static page를 만들고 params를 getStaticProps에 넘겨줌
   return {
-    paths: sites.map((site) => ({
+    paths: (sites ?? []).map((site) => ({
       params: { siteId: site.id.toString() }
     })),
     fallback: false // can also be true or 'blocking'
@@ -82,11 +82,17 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<{}, { siteId: string }> = async ({
   params
 }) => {
-  const { siteId } = params!
+  if (!params?.siteId) {
+    return {
+      props: {}
+    }
+  }
+  const { siteId } = params
   const { feedback, error } = await getAllFeedback(siteId)
 
   return {
     // Passed to the page component as props
-    props: { initialFeedback: feedback }
+    props: { initialFeedback: feedback },
+    revalidate: 10
   }
 }

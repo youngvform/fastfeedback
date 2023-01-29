@@ -43,7 +43,11 @@ const AddSiteModal: FC<PropsWithChildren> = ({ children }) => {
       duration: 5000,
       isClosable: true
     })
-    mutate(API.SITES, (data) => ({ sites: [...data?.sites!, newSite] }), false)
+    mutate(
+      [API.SITES, auth.user?.accessToken],
+      (data) => ({ sites: [...data?.sites!, newSite] }),
+      false
+    )
     onClose()
     reset()
   }

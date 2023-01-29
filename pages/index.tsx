@@ -1,7 +1,9 @@
 import Head from 'next/head'
+import Script from 'next/script'
 import { Button, Code, Flex, Heading, Icon, Text } from '@chakra-ui/react'
 import { useAuth } from '@/lib/auth'
 import EmptyState from '@/components/EmptyState'
+import { Cookie } from '@/lib/enums'
 
 export default function Home() {
   const auth = useAuth()
@@ -16,6 +18,16 @@ export default function Home() {
       <Head>
         <title>Fast Feedback</title>
       </Head>
+      <Script
+        id="is-logged-in"
+        dangerouslySetInnerHTML={{
+          __html: `
+          if (document.cookie && document.cookie.includes('${Cookie.IS_LOGGED_IN}')) {
+            window.location.href = "/dashboard"
+          }
+        `
+        }}
+      />
       <Heading>Fast Feedback</Heading>
       <Text>
         <Code>{auth.user?.name}</Code>

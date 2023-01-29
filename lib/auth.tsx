@@ -16,7 +16,9 @@ import {
   onAuthStateChanged,
   User
 } from 'firebase/auth'
+import Cookies from 'js-cookie'
 import { createUser } from './db'
+import { Cookie } from './enums'
 
 const githubAuthProvider = new GithubAuthProvider()
 const auth = getAuth()
@@ -44,9 +46,14 @@ function useProvideAuth() {
       const { accessToken, ...userWithoutToken } = user
       createUser(user.uid, userWithoutToken)
       setUser(user)
+
+      Cookies.set(Cookie.IS_LOGGED_IN, '1', {
+        expires: 1
+      })
       return user
     } else {
       setUser(null)
+      Cookies.remove(Cookie.IS_LOGGED_IN)
       return null
     }
   }

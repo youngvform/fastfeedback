@@ -17,3 +17,7 @@ export enum ErrorCode {
   EXPIRED_TOKEN = 'auth/id-token-expired',
   UNAUTHORIZED = 'Unauthorized'
 }
+
+export enum Cookie {
+  IS_LOGGED_IN = 'isLoggedIn'
+}
