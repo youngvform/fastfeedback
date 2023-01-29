@@ -26,7 +26,7 @@ export interface Feedback {
   authorId: string
   createdAt: string
   provider: string
-  rating: number
+  rating?: number
   siteId: string
   status: FeedbackStatus
   text: string
